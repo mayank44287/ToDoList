@@ -12,9 +12,17 @@ class ToDoListViewController: UITableViewController {
     
     var itemArray = ["Mayank", "Raj","Into"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if let items = defaults.array(forKey: "ToDoListArray ") as? [String]{   //to make sure the app doesnt crash if the file                                                                      //   does not exist
+            itemArray = items
+            for i in itemArray{
+                print(i)
+            }
+        }
     }
     
     
@@ -60,6 +68,7 @@ class ToDoListViewController: UITableViewController {
             //what will happen once user clicks Add Item Button on UI
             //alert
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
             self.tableView.reloadData()
             
         }
